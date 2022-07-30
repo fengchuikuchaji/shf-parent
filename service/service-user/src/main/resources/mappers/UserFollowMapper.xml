@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mapper.UserFollowMapper">
+    <sql id="columns">
+        select id,user_id,house_id,create_time,update_time,is_deleted
+    </sql>
+    <select id="findByUserIdAndHouseId" resultType="UserFollow">
+        <include refid="columns"></include>
+        from user_follow where user_id = #{userId} and house_id = #{houseId}
+    </select>
+
+    <insert id="insert">
+        insert into user_follow (user_id,house_id)
+        values (#{userId},#{houseId})
+    </insert>
+
+    <update id="update">
+        update user_follow set is_deleted = #{isDeleted},update_time=now() where id = #{id}
+    </update>
+
+    <select id="findListPage" resultType="UserFollowVo">
+        SELECT
+            hh.build_area,
+            (SELECT NAME FROM hse_community WHERE id=hh.community_id) communityName,
+            uf.update_time,
+            hh.direction_id,
+            hh.floor_id,
+            uf.id,
+            hh.name,
+            hh.unit_price,
+            hh.default_image_url,
+            hh.total_price,
+            (SELECT NAME FROM hse_dict WHERE id=hh.house_type_id) houseTypeName,
+            (SELECT NAME FROM hse_dict WHERE id=hh.floor_id) floorName,
+            (SELECT NAME FROM hse_dict WHERE id=hh.direction_id) directionName
+        FROM user_follow uf LEFT JOIN hse_house hh ON uf.house_id=hh.id
+        WHERE uf.user_id=#{userId} and uf.is_deleted=0 and hh.is_deleted=0
+    </select>
+
+    <update id="delete">
+        update user_follow set is_deleted = 1,update_time=now() where id = #{id}
+    </update>
+</mapper>
