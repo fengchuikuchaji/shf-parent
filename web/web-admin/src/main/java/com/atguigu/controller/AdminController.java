@@ -60,6 +60,7 @@ public class AdminController extends BaseController {
         model.addAttribute("filters",filters);
 
         System.out.println("hello master");
+        System.out.println("hello 热修复");
         System.out.println("现在处于热修复分支，进行热修复...");
         //5. 显示首页
         return PAGE_INDEX;
