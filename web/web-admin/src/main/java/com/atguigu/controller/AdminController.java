@@ -59,7 +59,7 @@ public class AdminController extends BaseController {
         //4. 将搜索条件存入请求域
         model.addAttribute("filters",filters);
 
-        System.out.println("hello hot-fix");
+        System.out.println("hello master");
         System.out.println("现在处于热修复分支，进行热修复...");
         //5. 显示首页
         return PAGE_INDEX;
