@@ -58,6 +58,8 @@ public class AdminController extends BaseController {
         model.addAttribute("page",pageInfo);
         //4. 将搜索条件存入请求域
         model.addAttribute("filters",filters);
+
+        System.out.println("hello world");
         //5. 显示首页
         return PAGE_INDEX;
     }
